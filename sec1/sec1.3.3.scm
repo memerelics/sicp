@@ -1,6 +1,14 @@
+;;; 1.3.3 一般的方法としての手続き
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-load-path ".")
 (load "my_defs")
 
+;; theme -> 関数の零点と不動点を探す一般的方法
+
+;; 区間二分法(half-interval method)
+;; -- 連続関数fに対し, 方程式f(x) = 0の根を探す単純かつ強力な方法. 零点探索.
+;; 必要なステップはΘ(log(L/T))で増加する. (L: 区間の長さ, T: 許容誤差)
 (define (search f neg-point pos-point)
   (let ((midpoint (average neg-point pos-point)))
     (if (close-enough? neg-point pos-point)
@@ -15,8 +23,8 @@
 (define (close-enough? x y)
   (< (abs (- x y)) 0.001))
 
-; searchは引数に間違った符号が与えられたときエラーになるので厄介。
-; 符号判定でラップしてやる。
+;; searchは引数に間違った符号が与えられたときエラーになるので厄介。
+;; 符号判定でラップしてやる。
 (define (half-interval-method f a b)
   (let ((a-value (f a))
         (b-value (f b)))
@@ -36,7 +44,11 @@
 ;                             2.0))
 
 
-; 関数fの不動点(fixed point)とは、f(x)=xを満たすx.
+;; 関数fの不動点(fixed point)とは、f(x)=xを満たすx.
+;; "その写像によって自分自身に写される点のことである"
+;; In mathmatics, a fixed point (sometimes shortened to fixpoint, also known as an invariant point) of a function |is| a point that is mapped to itself by the function.
+;; 不動点探索法のひとつは, 初期値にfを繰り返し作用させて値があまり変わらなくなったらそのへんが不動点とする方法.
+;; f(x), f(f(x)), f(f(f(x))), ...
 (define tolerance 0.00001)
 (define (fixed-point f first-guess)
   (define (close-enough? v1 v2)

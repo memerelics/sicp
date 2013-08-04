@@ -160,3 +160,12 @@ TODOs
     sec3/sec3.1.2.scm:8:  ;... TODO
     sec3/sec3.2.4.scm:16:;; TODO: 図3.11
 
+
+Clojure
+===================================================================
+
+On 2nd lap, I'd like to use Clojure.
+
+    $ cd clj
+    $ lein deps
+

@@ -1,3 +1,6 @@
+;;; 1.3.2 lambdaを使う手続きの構築
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (add-load-path ".")
 (load "my_defs")
 (load "sec1.3.1.sum")
@@ -29,17 +32,18 @@
 ; は、以下と同じ
 ; (define plus4 (lambda (x) (+ x 4)))
 
+;;; 局所変数letを作る
 
 ; pattern1: use function helper
 (define (f x y)
-  (define (f-helper a b)
+  (define (f-helper a b) ;; 補助的な手続きで局所変数を束縛
     (+ (* x (square a b))
        (* y b)
        (* a b)))
   (f-helper (+ 1 (* x y))
             (- 1 y)))
 
-; pattern2: use lambda
+; pattern2: use lambda. やってることは同じ
 (define (f x y)
   ((lambda (a b)
     (+ (* x (square a b))
@@ -48,7 +52,7 @@
    (+ 1 (* x y))
    (- 1 y)))
 
-; pattern2: use let.
+; pattern2': use let.
 (define (f x y)
    (let ((a (+ 1 (* x y)))
          (b (- 1 y)))
